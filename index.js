@@ -5,7 +5,7 @@ const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fet
 const app = express();
 app.use(cors());
 
-const API_KEY = 'MYSECRETKEY123'; // 🔐 Change this to something strong
+const API_KEY = '!MYSECRE@TKEY123'; // 🔐 Change this to your actual key
 
 // ✅ API key validation middleware
 app.use('/proxy', (req, res, next) => {
@@ -16,7 +16,7 @@ app.use('/proxy', (req, res, next) => {
   next();
 });
 
-// 🌐 Main proxy route
+// 🌐 Proxy route
 app.get('/proxy', async (req, res) => {
   const targetUrl = req.query.url;
   if (!targetUrl) return res.status(400).send('Missing ?url= parameter');
@@ -25,6 +25,9 @@ app.get('/proxy', async (req, res) => {
     const response = await fetch(targetUrl);
     const contentType = response.headers.get('content-type') || 'text/plain';
     const body = await response.text();
+
+    // ✅ Prevent caching
+    res.set('Cache-Control', 'no-store');
     res.set('Content-Type', contentType).send(body);
   } catch (err) {
     console.error('Proxy error:', err);
