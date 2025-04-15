@@ -5,7 +5,7 @@ const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fet
 const app = express();
 app.use(cors());
 
-const API_KEY = '!MYSECRE@TKEY123'; // 🔐 Change this to your actual key
+const API_KEY = 'MYSECRETKEY123987'; // 🔐 Change this to your actual key
 
 // ✅ API key validation middleware
 app.use('/proxy', (req, res, next) => {
